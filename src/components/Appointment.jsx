@@ -84,7 +84,7 @@ const Appointment = ({ doctor, onClose }) => {
             }
 
             const fullSlot = new Date(`${date}T${slot}:00`);
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}api/appointment`, {
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/appointment`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

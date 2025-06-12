@@ -9,7 +9,7 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}api/doctors`)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/doctors`)
       .then(res => res.json())
       .then((data) => {
         if (data.status == 'OK') {
