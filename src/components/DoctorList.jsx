@@ -6,7 +6,6 @@ const DoctorList = ({ doctors, onMakeAppointment }) => {
           <h3>{doc.name}</h3>
           <p>Specialization: {doc.specialization}</p>
           <p>Experience: {doc.experience} years</p>
-          <p>Hospital: {doc.hospital}</p>
           <button onClick={() => onMakeAppointment(doc)}>Make Appointment</button>
         </div>
       ))}
