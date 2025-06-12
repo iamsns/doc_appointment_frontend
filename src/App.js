@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import DoctorList from './components/DoctorList';
+import Appointment from './components/Appointment';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [doctors, setDoctors] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:4040/api/doctors')
+      .then(res => res.json())
+      .then((data) => {
+        if (data.status == 'OK') {
+         setDoctors(data.data)
+        }
+      }
+      )
+      .catch(err => {
+        console.error('Error fetching doctors:-> ', err)
+        alert(err.message)
+      });
+  }, []);
+
+  const handleMakeAppointment = (doctor) => {
+    setSelectedDoctor(doctor);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedDoctor(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1 className="app-header">Doctor Appointment Booking</h1>
+      <DoctorList doctors={doctors} onMakeAppointment={handleMakeAppointment} />
+      {isModalOpen && (
+        <Appointment doctor={selectedDoctor} onClose={closeModal} />
+      )}
     </div>
   );
 }
